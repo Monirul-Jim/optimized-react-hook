@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 
 const InputForm = () => {
+  const [user, setUser] = useState({ name: "", email: "" });
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(e);
+    console.log(user, "form submit");
+  };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(user, "on change");
+    const inputValue = e.target.name;
+    const value = e.target.value;
+    setUser({ ...user, [inputValue]: value });
   };
   return (
     <div>
@@ -12,12 +19,14 @@ const InputForm = () => {
       </h1>
       <form onSubmit={handleSubmit}>
         <input
+          onChange={handleChange}
           type="text"
           name="name"
           id=""
           className="border-2  py-2 border-blue-600 rounded-sm"
         />
         <input
+          onChange={handleChange}
           type="text"
           name="email"
           id=""
