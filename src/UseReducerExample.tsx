@@ -6,6 +6,8 @@ const reducer = (currentState, action) => {
 
     case "decrement":
       return { count: currentState.count - 1 };
+    case "incrementBySetAmount":
+      return { count: currentState.count + action.payload };
 
     default:
       return currentState;
@@ -25,6 +27,12 @@ const UseReducerExample = () => {
         className="bg-blue-600 font-bold text-white py-2 px-2 rounded-sm ml-4"
       >
         Increment
+      </button>
+      <button
+        onClick={() => dispatch({ type: "incrementBySetAmount", payload: 3 })}
+        className="bg-green-600 font-bold text-white py-2 px-2 rounded-sm ml-4"
+      >
+        Increment by 3
       </button>
       <button
         onClick={() => dispatch({ type: "decrement" })}

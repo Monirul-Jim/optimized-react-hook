@@ -1,15 +1,16 @@
-import React from "react";
-
-const initialState = { count: 0 };
-const reducer = (currentState, action) => {
+import { ChangeEvent } from "react";
+const initialState = { name: "", email: "" };
+type TAction = {
+  type: string;
+  payload: string;
+};
+const reducer = (currentState: typeof initialState, action: TAction) => {
   switch (action.type) {
-    case "increment":
-      return { count: currentState.count + 1 };
+    case "addName":
+      return { ...currentState, name: action.payload };
 
-    case "decrement":
-      return { count: currentState.count - 1 };
-    case "incrementBySetAmount":
-      return { count: currentState.count + someAmount };
+    case "addEmail":
+      return { ...currentState, email: action.payload };
 
     default:
       return currentState;
@@ -18,34 +19,43 @@ const reducer = (currentState, action) => {
 import { useReducer } from "react";
 const UseReducerWithTypeScript = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(state);
+  };
   return (
     <div>
-      <h1 className="text-4xl mt-8 font-bold text-center">
-        This is Use Reducer
-      </h1>
-      <h1 className="text-2xl font-bold ml-10">{state.count}</h1>
-      <button
-        onClick={() => dispatch({ type: "increment" })}
-        className="bg-blue-600 font-bold text-white py-2 px-2 rounded-sm ml-4"
-      >
-        Increment
-      </button>
-      <button
-        onClick={() => dispatch({ type: "decrement" })}
-        className="bg-red-600 font-bold text-white py-2 px-2 rounded-sm ml-4"
-      >
-        Decrement
-      </button>
-      <h1 className="text-2xl font-bold ml-10">Dynamic Change</h1>
-      <button
-        onClick={() => dispatch({ type: "decrement", payload: 3 })}
-        className="bg-blue-600 font-bold text-white py-2 px-2 rounded-sm ml-4"
-      >
-        Increment by 3
-      </button>
-      <button className="bg-red-600 font-bold text-white py-2 px-2 rounded-sm ml-4">
-        Decrement
-      </button>
+      <div>
+        <h1 className="text-4xl font-bold text-center">
+          hello this is input form
+        </h1>
+        <form onSubmit={handleSubmit}>
+          <input
+            onChange={(e) =>
+              dispatch({ type: "addName", payload: e.target.value })
+            }
+            type="text"
+            name="name"
+            id=""
+            className="border-2  py-2 border-blue-600 rounded-sm"
+          />
+          <input
+            onChange={(e) =>
+              dispatch({ type: "addEmail", payload: e.target.value })
+            }
+            type="text"
+            name="email"
+            id=""
+            className="border-2  py-2 border-blue-600 rounded-sm"
+          />
+          <button
+            type="submit"
+            className="bg-blue-500 py-2 px-2 text-white font-bold rounded-md space-x-3"
+          >
+            Submit Form
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
